@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Level Up with Gladys: Registration Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:     #0A2540;
+  --teal:     #1D9E75;
+  --teal-lt:  #5DCAA5;
+  --gold:     #FAC775;
+  --pink:     #D4537E;
+  --offwhite: #F4F7FA;
+  --white:    #FFFFFF;
+  --border:   #DDE3ED;
+  --text:     #1A202C;
+  --muted:    #64748B;
+  --radius:   16px;
+  --shadow:   0 4px 28px rgba(10,37,64,0.09);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--offwhite);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── COVER ── */
+.cover {
+  width: 100%;
+  height: 280px;
+  background: #0A2540;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+.cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,37,64,0.15) 0%, rgba(10,37,64,0.35) 55%, rgba(10,37,64,0.92) 100%);
+}
+.cover-text {
+  position: relative;
+  z-index: 2;
+  padding: 0 32px 26px;
+  width: 100%;
+  text-align: center;
+}
+.cover-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: 0.2px;
+}
+.cover-title em { color: var(--gold); font-style: italic; }
+
+/* ── WRAP ── */
+.wrap {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 18px 60px;
+}
+
+/* ── INTRO PILL ── */
+.intro {
+  background: var(--navy);
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 28px 30px;
+  margin-bottom: 30px;
+}
+.intro h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  line-height: 1.35;
+  letter-spacing: 0.2px;
+}
+.intro h2 em { color: var(--gold); font-style: italic; }
+.intro p { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.8; letter-spacing: 0.1px; }
+
+/* ── SECTION HEADING ── */
+.section-head {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+/* ── TRACK CARDS ── */
+.tracks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+.track {
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px 18px 50px;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+  position: relative;
+  user-select: none;
+}
+.track:hover { border-color: var(--teal-lt); box-shadow: var(--shadow); }
+.track.on { border-color: var(--teal); background: #F0FAF6; box-shadow: 0 4px 18px rgba(29,158,117,0.16); }
+
+/* Clear custom checkbox */
+.track .box {
+  position: absolute;
+  top: 18px; left: 16px;
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  border: 2px solid var(--border);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .2s, background .2s;
+}
+.track.on .box { background: var(--teal); border-color: var(--teal); }
+.track .box svg { opacity: 0; transform: scale(0.6); transition: opacity .15s, transform .15s; }
+.track.on .box svg { opacity: 1; transform: scale(1); }
+
+.track .t-icon { font-size: 26px; margin-bottom: 8px; }
+.track .t-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+.track .t-meta { font-size: 11.5px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+.track .t-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--teal);
+}
+.track .t-save {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--pink);
+  background: rgba(212,83,126,0.08);
+  border-radius: 100px;
+  padding: 3px 9px;
+  display: inline-block;
+  margin-top: 4px;
+}
+.track .t-installment {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  display: block;
+  line-height: 1.4;
+}
+
+/* ── FORM CARD ── */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.3px;
+  padding-bottom: 12px;
+  margin-bottom: 22px;
+  border-bottom: 2.5px solid var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── GRID ── */
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ── FIELD ── */
+.field { margin-bottom: 20px; }
+.field:last-child { margin-bottom: 0; }
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 7px;
+  letter-spacing: 0.1px;
+}
+.field label .req { color: var(--pink); }
+.field label .hint {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 11.5px;
+  margin-left: 4px;
+}
+input[type=text],
+input[type=email],
+input[type=tel],
+select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--offwhite);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--teal);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(29,158,117,0.1);
+}
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+textarea { resize: vertical; min-height: 88px; line-height: 1.65; }
+input::placeholder, textarea::placeholder { color: #A8B5C8; }
+
+/* ── RADIO ── */
+.radio-list, .check-list { display: flex; flex-direction: column; gap: 7px; }
+.r-item, .c-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 11px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.r-item:hover, .c-item:hover { border-color: var(--teal-lt); background: #F7FDFB; }
+.r-item:has(input:checked), .c-item:has(input:checked) { border-color: var(--teal); background: #F0FAF6; }
+.r-item input[type=radio],
+.c-item input[type=checkbox] {
+  flex: 0 0 18px;
+  width: 18px; height: 18px;
+  min-width: 18px;
+  max-width: 18px;
+  margin: 0;
+  accent-color: var(--teal);
+  cursor: pointer;
+  padding: 0; border: none;
+}
+.r-label, .c-label {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.4;
+}
+.r-label strong, .c-label strong { font-weight: 700; color: var(--navy); font-size: 13.5px; }
+.r-label small, .c-label small { color: var(--muted); font-size: 11.5px; }
+
+/* session recommended badge */
+.rec-badge {
+  display: inline-block;
+  background: rgba(250,199,117,0.18);
+  color: #8B5A00;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 9px;
+  margin-left: 6px;
+  letter-spacing: .3px;
+  vertical-align: middle;
+}
+
+/* ── TRACK DISPLAY ── */
+.track-display {
+  background: #F0FAF6;
+  border: 1.5px solid var(--teal-lt);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--teal);
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+}
+.track-display.empty { color: var(--muted); font-weight: 400; font-style: italic; }
+
+/* ── NOTICE BOX ── */
+.notice {
+  background: #F0FAF6;
+  border: 1.5px solid rgba(29,158,117,0.22);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #085041;
+  line-height: 1.75;
+  margin-bottom: 22px;
+}
+.notice strong { color: #0F6E56; }
+
+/* ── SUBMIT ── */
+.submit-wrap { text-align: center; padding-top: 6px; }
+.btn-submit {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 52px;
+  cursor: pointer;
+  letter-spacing: .4px;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  width: 100%;
+  max-width: 360px;
+}
+.btn-submit:hover { background: var(--teal); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(29,158,117,0.28); }
+.btn-submit:active { transform: translateY(0); }
+.submit-note { font-size: 11.5px; color: var(--muted); margin-top: 12px; line-height: 1.65; }
+
+/* ── SUCCESS ── */
+#success {
+  display: none;
+  background: var(--navy);
+  border-radius: var(--radius);
+  padding: 44px 32px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+#success .s-icon { font-size: 58px; margin-bottom: 16px; }
+#success h3 { font-family:'Playfair Display',serif; font-size:26px; font-weight:800; color:var(--gold); margin-bottom:10px; }
+#success p { font-size:13.5px; color:rgba(255,255,255,0.65); line-height:1.75; }
+
+/* ── FOOTER ── */
+.foot {
+  background: var(--navy);
+  border-radius: var(--radius);
+  text-align: center;
+  padding: 30px 24px;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.6);
+  line-height: 2;
+  margin-top: 10px;
+}
+.foot strong { color: var(--gold); font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 0.3px; }
+.foot .foot-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.foot a { color: var(--teal-lt); text-decoration: none; }
+.foot a:hover { text-decoration: underline; }
+.foot .copyright { font-size: 11px; color: rgba(255,255,255,0.35); display:block; margin-top: 8px; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:580px){
+  .tracks { grid-template-columns:1fr; }
+  .row2 { grid-template-columns:1fr; }
+  .card { padding:20px 16px; }
+  .intro { padding:20px 18px; }
+  .cover-title { font-size:26px; }
+  .cover { height:230px; }
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <img class="cover-img" src="WhatsApp Image 2026-06-13 at 15.40.02.jpeg" alt="Level Up with Gladys"/>
+  <div class="cover-overlay"></div>
+  <div class="cover-text">
+    <div class="cover-eyebrow" style="margin-top:6px;margin-bottom:0;">Powered by SkyDevs Africa</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- INTRO -->
+<div class="intro">
+  <div class="cover-title" style="text-align:center"><em>Level Up </em> with Gladys 🚀</div> <br>
+  <h2 style="text-align:center;">AI <em>For Everyone</em></h2>
+  <p>Whether you want to use AI to work smarter, grow your business, start a data career, or simply not be left behind, this is your starting point. Real sessions. Practical skills. No jargon. Fill in the form below and Gladys will reach out to you personally within 24 hours.</p>
+</div>
+
+<!-- TRACK CARDS -->
+<div class="section-head" id="trackSectionHead">Step 1 — Choose Your Track 👇</div>
+<div class="tracks" id="trackGrid">
+
+  <div class="track" data-value="Track 1: AI for Daily Work · KSh 5,000/mo · Full KSh 9,500" onclick="pickTrack(this)">
+    <div class="box"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 12 13 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="t-icon">💼</div>
+    <div class="t-name">AI for Daily Work</div>
+    <div class="t-meta">4 weeks · 8 sessions · 2×/week · 1.5 hrs each<br/>For teachers, doctors, lawyers, HR, marketers, accountants &amp; more</div>
+    <div class="t-price">KSh 5,000 <span style="font-size:11px;font-weight:500;color:var(--muted);">/month</span></div>
+    <span class="t-save">Pay full = KSh 9,500 (save KSh 500)</span>
+  </div>
+
+  <div class="track" data-value="Track 2: AI for Business Growth · Month 1 KSh 8,000, Month 2 (2wks) KSh 4,000 · Full KSh 10,000" onclick="pickTrack(this)">
+    <div class="box"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 12 13 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="t-icon">📈</div>
+    <div class="t-name">AI for Business Growth</div>
+    <div class="t-meta">6 weeks · 12 sessions · 2×/week · 1.5 hrs each<br/>For entrepreneurs, freelancers &amp; business owners</div>
+    <div class="t-price">KSh 8,000 <span style="font-size:11px;font-weight:500;color:var(--muted);">Month 1</span></div>
+    <span class="t-installment">Month 2 (2 weeks) — KSh 4,000</span>
+    <span class="t-save">Pay full = KSh 10,000 (save KSh 2,000)</span>
+  </div>
+
+  <div class="track" data-value="Track 3: Data & AI Career Track · KSh 15,000/mo · Full KSh 40,000" onclick="pickTrack(this)">
+    <div class="box"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 12 13 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="t-icon">🧠</div>
+    <div class="t-name">Data &amp; AI Career Track</div>
+    <div class="t-meta">12 weeks · 24 sessions · 2×/week · 1.5 hrs each<br/>For those starting a career in data science or AI</div>
+    <div class="t-price">KSh 15,000 <span style="font-size:11px;font-weight:500;color:var(--muted);">/month × 3</span></div>
+    <span class="t-save">Pay full = KSh 40,000 (save KSh 5,000)</span>
+    <span class="t-installment">Or pay monthly — KSh 15,000 × 3 months</span>
+  </div>
+
+  <div class="track" data-value="Track 4: AI Toolkit for Educators · KSh 3,500 full" onclick="pickTrack(this)">
+    <div class="box"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 12 13 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="t-icon">🏫</div>
+    <div class="t-name">AI Toolkit for Educators</div>
+    <div class="t-meta">3 weeks · 6 sessions · 2×/week · 1.5 hrs each<br/>Special pricing — for teachers specifically</div>
+    <div class="t-price">KSh 3,500 <span style="font-size:11px;font-weight:500;color:var(--muted);">full course</span></div>
+    <span class="t-save">Short &amp; focused — pay once, done ✓</span>
+  </div>
+
+</div>
+
+<!-- SUCCESS -->
+<div id="success">
+  <div class="s-icon">🎉</div>
+  <h3>You're in!</h3>
+  <p>Thank you for registering for Level Up with Gladys. Gladys will reach out to you personally on WhatsApp within 24 hours to confirm your spot and share next steps. Get ready to level up! 🚀</p>
+</div>
+
+<!-- FORM -->
+<form id="theForm" novalidate>
+
+  <!-- SECTION 1 -->
+  <div class="card">
+    <div class="card-title">👤 About You</div>
+
+    <div class="row2">
+      <div class="field">
+        <label for="fn">First Name <span class="req">*</span></label>
+        <input type="text" id="fn" name="First Name" placeholder="e.g. Gladoo" required/>
+      </div>
+      <div class="field">
+        <label for="ln">Last Name <span class="req">*</span></label>
+        <input type="text" id="ln" name="Last Name" placeholder="e.g. Njoroge" required/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="em">Email Address <span class="req">*</span></label>
+      <input type="email" id="em" name="Email" placeholder="yourname@gmail.com" required/>
+    </div>
+
+    <div class="field">
+      <label for="ph">WhatsApp Number <span class="req">*</span> <span class="hint">(with country code — e.g. +254 7XX XXX XXX)</span></label>
+      <input type="tel" id="ph" name="WhatsApp Number" placeholder="+254 700 000 000" required/>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label for="co">Country <span class="req">*</span></label>
+        <select id="co" name="Country" required>
+          <option value="" disabled selected>Select country</option>
+          <option>Kenya</option><option>Uganda</option><option>Tanzania</option>
+          <option>Rwanda</option><option>Ethiopia</option><option>Nigeria</option>
+          <option>Ghana</option><option>South Africa</option><option>United Kingdom</option>
+          <option>United States</option><option>Canada</option><option>Germany</option>
+          <option>Australia</option><option>UAE / Dubai</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="ci">City <span class="req">*</span></label>
+        <input type="text" id="ci" name="City" placeholder="e.g. Nairobi" required/>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label for="pr">Current Job / Profession <span class="req">*</span></label>
+        <input type="text" id="pr" name="Profession" placeholder="e.g. Secondary School Teacher" required/>
+      </div>
+      <div class="field">
+        <label for="ag">Age Range <span class="req">*</span></label>
+        <select id="ag" name="Age Range" required>
+          <option value="" disabled selected>Select</option>
+          <option>18 – 25</option><option>26 – 35</option>
+          <option>36 – 45</option><option>46 – 55</option><option>56+</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="card">
+    <div class="card-title">🎯 Your Goals</div>
+
+    <div class="field">
+      <label>Selected Track <span class="req">*</span> <span class="hint">(selected above)</span></label>
+      <div class="track-display empty" id="trackDisplay">Please select a track at the top ↑</div>
+      <input type="hidden" id="trackVal" name="Selected Track" required/>
+    </div>
+
+    <div class="field" style="margin-top:20px;">
+      <label>What is your main goal? <span class="req">*</span></label>
+      <div class="radio-list">
+        <label class="r-item">
+          <input type="radio" name="Main Goal" value="Use AI tools in my current job" required/>
+          <div class="r-label"><strong>Use AI in my current job</strong><small>I want practical tools I can use starting Monday morning</small></div>
+        </label>
+        <label class="r-item">
+          <input type="radio" name="Main Goal" value="Grow my business using AI"/>
+          <div class="r-label"><strong>Grow my business with AI</strong><small>Marketing, operations, customer service — I want AI everywhere</small></div>
+        </label>
+        <label class="r-item">
+          <input type="radio" name="Main Goal" value="Start a career in Data Science or AI"/>
+          <div class="r-label"><strong>Start a career in Data / AI</strong><small>I want to professionally pivot into a data or AI role</small></div>
+        </label>
+        <label class="r-item">
+          <input type="radio" name="Main Goal" value="Bring AI into my classroom as a teacher"/>
+          <div class="r-label"><strong>Bring AI into my classroom</strong><small>I am a teacher and want to transform how I teach and plan</small></div>
+        </label>
+        <label class="r-item">
+          <input type="radio" name="Main Goal" value="General AI literacy — I just want to understand it"/>
+          <div class="r-label"><strong>General AI literacy</strong><small>I want to understand what's happening in the world of AI</small></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="lvl">Current AI knowledge level <span class="req">*</span></label>
+      <select id="lvl" name="AI Knowledge Level" required>
+        <option value="" disabled selected>Select one</option>
+        <option>Complete beginner, never used an AI tool</option>
+        <option>Heard of ChatGPT but barely used it</option>
+        <option>Use AI occasionally but want to go deeper</option>
+        <option>Use AI regularly, want structured, serious learning</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Tools you have heard of or tried <span class="hint">(tick all that apply)</span></label>
+      <div class="check-list">
+        <label class="c-item"><input type="checkbox" name="Tools" value="ChatGPT"/><div class="c-label">ChatGPT</div></label>
+        <label class="c-item"><input type="checkbox" name="Tools" value="Google Gemini"/><div class="c-label">Google Gemini</div></label>
+        <label class="c-item"><input type="checkbox" name="Tools" value="Microsoft Copilot"/><div class="c-label">Microsoft Copilot</div></label>
+        <label class="c-item"><input type="checkbox" name="Tools" value="Midjourney or AI image tools"/><div class="c-label">Midjourney / AI image tools</div></label>
+        <label class="c-item"><input type="checkbox" name="Tools" value="Notion AI"/><div class="c-label">Notion AI</div></label>
+        <label class="c-item"><input type="checkbox" name="Tools" value="GitHub Copilot"/><div class="c-label">GitHub Copilot (coding)</div></label>
+        <label class="c-item"><input type="checkbox" name="Tools" value="None yet, starting from zero"/><div class="c-label">None yet, I am starting from zero</div></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="sg">What specific outcome do you want from this course? <span class="req">*</span></label>
+      <textarea id="sg" name="Specific Goal" placeholder="e.g. I want to use AI to write faster lesson plans, grade assignments more efficiently, and understand what my students are using..." required></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 3 — SESSIONS -->
+  <div class="card">
+    <div class="card-title">📅 Preferred Session Time</div>
+
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;">Tick all that could work for you. <strong style="color:var(--navy);">Gladys will confirm your final session</strong> when she contacts you. Recommended cohorts are shown.</p>
+
+    <div class="notice" style="margin-bottom:18px;">
+      <strong>🗓️ Cohort 1 begins on 22nd June 2026.</strong> Spaces are limited, register early to secure your seat.
+    </div>
+
+    <div class="field">
+      <div class="check-list">
+
+        <label class="c-item">
+          <input type="checkbox" name="Sessions" value="Saturday 5:00pm – 6:30pm EAT"/>
+          <div class="c-label">
+            <strong>Saturday · 5:00pm – 6:30pm EAT</strong>
+            <small>Cohort A · <span class="rec-badge">✦ Recommended for Professionals</span></small>
+          </div>
+        </label>
+
+        <label class="c-item">
+          <input type="checkbox" name="Sessions" value="Saturday 7:00pm – 8:30pm EAT"/>
+          <div class="c-label">
+            <strong>Saturday · 7:00pm – 8:30pm EAT</strong>
+            <small>Cohort B · <span class="rec-badge">✦ Recommended for Entrepreneurs</span></small>
+          </div>
+        </label>
+
+        <label class="c-item">
+          <input type="checkbox" name="Sessions" value="Weekday Monday & Wednesday 10:00pm – 11:30pm EAT"/>
+          <div class="c-label">
+            <strong>Weekday · Mon &amp; Wed · 10:00pm – 11:30pm EAT</strong>
+            <small>Cohort C · <span class="rec-badge">✦ Recommended for Data &amp; Career Track</span></small>
+          </div>
+        </label>
+
+        <label class="c-item">
+          <input type="checkbox" name="Sessions" value="Weekday Tuesday & Thursday 10:00pm – 11:30pm EAT"/>
+          <div class="c-label">
+            <strong>Weekday · Tue &amp; Thu · 10:00pm – 11:30pm EAT</strong>
+            <small>Cohort D · <span class="rec-badge">✦ Recommended for Educators</span></small>
+          </div>
+        </label>
+
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="dev">Device you will use for sessions <span class="req">*</span></label>
+      <select id="dev" name="Device" required>
+        <option value="" disabled selected>Select one</option>
+        <option>Laptop or desktop computer</option>
+        <option>Tablet (iPad or Android)</option>
+        <option>Smartphone only</option>
+        <option>I am arranging a device before the course starts</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="ref">How did you hear about Level Up with Gladys? <span class="req">*</span></label>
+      <select id="ref" name="Referral Source" required>
+        <option value="" disabled selected>Select one</option>
+        <option>Instagram</option><option>Facebook</option>
+        <option>WhatsApp (someone shared it)</option><option>TikTok</option>
+        <option>Twitter / X</option><option>LinkedIn</option>
+        <option>A friend told me directly</option>
+        <option>I know Gladys personally</option><option>Other</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="card">
+    <div class="card-title">✅ Commitment</div>
+
+    <div class="field">
+      <label>Payment readiness <span class="req">*</span></label>
+      <div class="radio-list">
+        <label class="r-item">
+          <input type="radio" name="Payment Ready" value="Yes, I am ready to pay and start now" required/>
+          <div class="r-label"><strong>Yes, I am ready to pay and start 🚀</strong><small>I understand the track fee and I am fully committed</small></div>
+        </label>
+        <label class="r-item">
+          <input type="radio" name="Payment Ready" value="I want to speak with Gladys first to confirm"/>
+          <div class="r-label"><strong>I want to confirm details with Gladys first</strong><small>Please reach out and I will confirm from there</small></div>
+        </label>
+        <label class="r-item">
+          <input type="radio" name="Payment Ready" value="Still exploring — not ready yet"/>
+          <div class="r-label"><strong>Still exploring</strong><small>I want to know more before committing</small></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="qs">Any questions or anything specific you want Gladys to know? <span class="hint">(optional)</span></label>
+      <textarea id="qs" name="Questions or Notes" placeholder="Ask anything — about the course content, schedule, payment plans, or what to prepare before starting..."></textarea>
+    </div>
+
+    <div class="notice">
+      <strong>📌 Important:</strong> Submitting this form does not automatically confirm your spot. Gladys reviews all registrations personally and will contact you on WhatsApp within 24 hours. Your place is confirmed once payment is received. All sessions run live on Google Meet. Recordings are not guaranteed. If you need to cancel before Session 2, a full refund will be provided.
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" class="btn-submit">Submit My Registration 🚀</button>
+      <p class="submit-note">By submitting, you agree to be contacted by Gladys via WhatsApp and email. Your details are kept private and will never be shared with third parties.</p>
+    </div>
+  </div>
+
+</form>
+
+<!-- FOOTER -->
+<div class="foot">
+  <div class="foot-brand">Level Up with Gladys</div>
+  A brand under <strong>SkyDevs Africa</strong><br/>
+  Part of the <strong>Skykids Africa</strong> family 🌍<br/>
+  📞 +254 724 960 315 &nbsp;|&nbsp; 💬 <a href="https://wa.me/+254735846076" target="_blank" rel="noopener">WhatsApp: +254 735 846 076</a><br/>
+  ✉️ <a href="mailto:skydevsafrica@gmail.com">skydevsafrica@gmail.com</a><br/>
+  <span class="copyright">© 2026 SkyDevs Africa. All rights reserved.</span>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── TRACK SELECTION ──
+function pickTrack(el) {
+  document.querySelectorAll('.track').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  const v = el.dataset.value;
+  document.getElementById('trackVal').value = v;
+  const d = document.getElementById('trackDisplay');
+  d.textContent = '✓  ' + v;
+  d.classList.remove('empty');
+  d.style.borderColor = '';
+}
+
+// ── FORM SUBMIT ──
+document.getElementById('theForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Validate track
+  if (!document.getElementById('trackVal').value) {
+    document.getElementById('trackDisplay').style.borderColor = '#E24B4A';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    alert('Please select a learning track at the top of the page first.');
+    return;
+  }
+
+  // Validate required text/select inputs
+  let ok = true;
+  this.querySelectorAll('input[required]:not([type=radio]):not([type=checkbox]), select[required], textarea[required]').forEach(f => {
+    if (!f.value.trim()) {
+      f.style.borderColor = '#E24B4A';
+      ok = false;
+    } else {
+      f.style.borderColor = '';
+    }
+  });
+
+  // Validate radio groups
+  ['Main Goal','Payment Ready'].forEach(name => {
+    if (!this.querySelector(`input[name="${name}"]:checked`)) ok = false;
+  });
+
+  if (!ok) {
+    alert('Please fill in all required fields marked with *');
+    return;
+  }
+
+  // Collect data
+  const tools = [...this.querySelectorAll('input[name="Tools"]:checked')].map(c => c.value).join(', ') || 'None selected';
+  const sessions = [...this.querySelectorAll('input[name="Sessions"]:checked')].map(c => c.value).join(' | ') || 'Not selected';
+
+  const payload = {
+    'Submission Date': new Date().toLocaleString('en-KE', { timeZone: 'Africa/Nairobi' }),
+    'First Name':       document.getElementById('fn').value.trim(),
+    'Last Name':        document.getElementById('ln').value.trim(),
+    'Email':            document.getElementById('em').value.trim(),
+    'WhatsApp Number':  document.getElementById('ph').value.trim(),
+    'Country':          document.getElementById('co').value,
+    'City':             document.getElementById('ci').value.trim(),
+    'Profession':       document.getElementById('pr').value.trim(),
+    'Age Range':        document.getElementById('ag').value,
+    'Selected Track':   document.getElementById('trackVal').value,
+    'Main Goal':        (this.querySelector('input[name="Main Goal"]:checked') || {}).value || '',
+    'AI Knowledge Level': document.getElementById('lvl').value,
+    'Tools Known':      tools,
+    'Specific Goal':    document.getElementById('sg').value.trim(),
+    'Preferred Sessions': sessions,
+    'Device':           document.getElementById('dev').value,
+    'Referral Source':  document.getElementById('ref').value,
+    'Payment Ready':    (this.querySelector('input[name="Payment Ready"]:checked') || {}).value || '',
+    'Questions or Notes': document.getElementById('qs').value.trim(),
+  };
+
+  // ── SEND TO GOOGLE APPS SCRIPT ──
+  // Replace the URL below with your deployed Apps Script Web App URL
+  // See apps-script-code.gs for setup instructions
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzEdNLyk7tvWQRft0mVb7grkb-8MhBYem56-sk_EDNRFqFL_iAvTfZ3B56gdZ4oXmqrog/exec';
+
+  if (SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {});
+  }
+
+  // Show success
+  this.style.display = 'none';
+  document.getElementById('trackSectionHead').style.display = 'none';
+  document.getElementById('trackGrid').style.display = 'none';
+  const s = document.getElementById('success');
+  s.style.display = 'block';
+  s.scrollIntoView({ behavior: 'smooth' });
+});
+
+// Clear red borders on interaction
+document.querySelectorAll('input, select, textarea').forEach(el => {
+  el.addEventListener('input', () => el.style.borderColor = '');
+  el.addEventListener('change', () => el.style.borderColor = '');
+});
+</script>
+
+</body>
+</html>
